@@ -52,12 +52,7 @@ public class NodeMultiple {
 	 * @param i        the daughter node's index
 	 */
 	public void setDaughter(NodeMultiple daughter, int i) {
-		if(i < 0 || i >= NODE_MAX_ARITY)
-		{
-			ErrorNaiveHandler.abort(ERROR_MSG_INDEX_OUT_OF_RANGE+"@"+getClass()+".setDaughter()");
-		}
-		daughters[i] = daughter;
-
+		this.daughters[i] = daughter;
 	}
 
 	/**
@@ -71,7 +66,7 @@ public class NodeMultiple {
 	 * @param daughters the daughters to set
 	 */
 	public void setDaughters(NodeMultiple[] daughters) {
-		/* TO BE COMPLETED */
+		this.daughters = daughters;
 	}
 
 	/**
@@ -83,19 +78,14 @@ public class NodeMultiple {
 	 * @param daughter
 	 */
 	public void addDaughter(NodeMultiple daughter) {
-		if(daughter==null)
-		{
-			return;
-		}
+		if (daughter == null) return;
 		int i = 0;
-		while(i < NODE_MAX_ARITY && daughters[i] != null)
+		while (i < daughters.length)
 		{
-			i++;
+			if (daughters[i] == null) daughters[i] = daughter;
+			else i++;
 		}
-		if(i < NODE_MAX_ARITY){
-			daughters[i] = daughter;
-		}
-
+		return;
 	}
 
 	/**
@@ -117,14 +107,9 @@ public class NodeMultiple {
 	 *         daughter node.
 	 */
 	public boolean hasDaughters() {
-		if (daughters == null)
-		{
-			return false; //d
-		}
+		if (daughters == null) return false;
 		int i = 0;
-		while (i < daughters.length && daughters[i] == null){
-			i++;
-		}
+		while (i < daughters.length && daughters[i] == null) i++;
 		return i < daughters.length ? true : false;
 	}
 
@@ -133,8 +118,8 @@ public class NodeMultiple {
 	 * Default constructor.
 	 */
 	public NodeMultiple() {
-		super(); // appel object
-		data = new Object();
+		super();
+		data = new Object();	//useless
 		daughters = new NodeMultiple[NODE_MAX_ARITY];
 	}
 
@@ -145,7 +130,9 @@ public class NodeMultiple {
 	 * @param data
 	 */
 	public NodeMultiple(Object data) {
+		this();
 		this.data = data;
 	}
+}
 
-//
+// eof
